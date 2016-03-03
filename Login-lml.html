@@ -8,52 +8,50 @@
 Imail-Login
 
 </title>
-<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <h1 style="color: black;">Hello</h1>
-<img src="http://www.raptor13.com/characters/npcIllidan/images/portrait_character.gif" align="left" width="300"></img>
-  <img src="http://www.raptor13.com/characters/npcIllidan/images/portrait_character.gif" align="right" width="300"> </img>
-<style type="text/css">
-
-  </style>
   
-</html>
-<body>
-	
-	<form action="" align="left" method="post">
-    <style type="text/css">
-  body {
-  padding-left: 15em;
-  background-color: #333A5D;
-  padding-right: 20em;
-  padding-top: 5em;
-  font-family: Georgia, "Cambria (Cuerpo)",
-        Times, serif;
-  color: black
-   }
-  </style>
-		<fieldset>
-			<legend>
-				<h1>Login</h1>
-			</legend>
-    <p>
-
-              <font color="aqua"size=5><label for="Username">Username or Adress: </label></font><br>
-              <input type="text" id="Username"><br>
-
-              <font color="aqua"size=5><label for="Password">Password: </label></font><br>
-              <input type="text" id="Password"><br>
-    </p>
- </form>
-</fieldset><br><br>
-<a href=""><font COLOR="blue">Register</font></a><br>
-<a href="Project-Main.html#Entities"><font color="blue">Log In</font>
-<br><br> 
-
-
-<center><img src="http://38.media.tumblr.com/3d36047d1b81a5ef56db4edebea252cd/tumblr_mme3sj9LQE1rid0n8o1_500.gif" width="463"> </img>
-</center>
-</body>
-
 </head>
+<body>
+  <div class="row">
+    <div class="col-md-3">
+    </div>
+  <div class="col-md-4">
+    <form align="center" method="post">
+      <div class="form-group required">
+    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required="required">
+    </div><br><br>
+  </div><br>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> Remember me
+        </label>
+      </div>
+    </div>
+  </div><br><br>
+              
+          <div class="btn-group">
+          <button type="button" class="btn btn-primary" onclick="login()">Log In</button><br><br>
+          <a href="Register-lml.html"><button type="button" class="btn btn-danger">Register</button></a>
+
+          </div>
+  </form></div>
+
+  
+</div>
+</body>
+<script type="text/javascript" src="application.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 
 </html>
