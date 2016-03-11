@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Sent extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -18,12 +18,9 @@ class Welcome extends CI_Controller {
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index()
-
 	{
-		$this->load->database();
-		$this->load->view('login');
+		$this->load->view('sent');
 	}
-	
 }
 
 /* End of file welcome.php */
