@@ -1,195 +1,118 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class User extends CI_Controller {
 
+session_start(); //we need to start session in order to access it through CI
 
-	public function index()
-	{
-		$data['title'] = 'Pagina Inicio';
-		$this->load->view('Pantillas/Header', $data);
-		$this->load->view('main_nav');
-		$this->load->view('usuario/login');
-		$this->load->view('Pantillas/Footer');
-	}
-	public function login(){
-		$data['title'] = 'Pagina Inicio';
-		$this->load->view('Pantillas/Header', $data);
-		$this->load->view('main_nav');
-		$this->load->view('usuario/login');
-		$this->load->view('Pantillas/Footer');
-	}
-	public function registrar(){
-		$data['title'] = 'Pagina Registro';
-		$this->load->view('Pantillas/Header', $data);
-		$this->load->view('usuario/registro');
-		$this->load->view('Pantillas/Footer');
+Class user extends CI_Controller {
 
-	}
-	public function insert(){
+public function __construct() {
+parent::__construct();
 
+// Load form helper library
+$this->load->helper('form');
 
-			$pas = $this->input->post('npassword'); 
-			$email = $this->input->post('ncorreo');
-			
-			$encrip = md5($pas);
-			$randcode = rand(1000,9000);
-   			$data  = array(
+// Load form validation library
+$this->load->library('form_validation');
 
-   				'name' => $this->input->post('nname') , 
-				'user' => $this->input->post('nusername') , 
-				'password' =>  $encrip,
-				'estado' => 0 , 
-				'code' => $randcode,
-				'email' => $email,
-				);
-   		
-			$this->load->model('model_user','user');
-			$check_user = $this->user->insersion($data);
+// Load session library
+$this->load->library('session');
 
-			if (!empty($check_user)){
-					
-					$data = array('is_logued_in' => TRUE,
-						'user_id' => $check_user->id,
-						'username' => $check_user->name,
-						'email' => $check_user->email,
-						'code' => $check_user->code
-						);
-					$this->session->set_userdata($data);
-					
-			}else{
-				redirect(base_url()."user/registrar");
-			}
-			
-		$urln = base_url()."user/envioCorreo/?code=$randcode";
-		
-		redirect($urln);
-		
-	}
+// Load database
+$this->load->model('appemail');
+}
 
-	public function autenticar(){
+// Show login page
+public function index() {
+$this->load->database();
+$this->load->view('login');
+}
 
-		$this->load->model('model_user', 'user');
-		$user =$this->input->post('nusername');
-    	$pass = $this->input->post('npassword'); 
-		$encrip = md5($pass);
-		$data['user'] = $this->user->getUser($user,$encrip);
-		$user = $data['user'];
-		
-		
-	
-		if (!empty($user)){
-			if ($user->estado == 1) {
-				
-				$data['id']=$user->id;
-				$data['title'] = "Pagina Principal";
-				$this->load->model('model_correo','correo');
-				$pendiente = "Pendiente";
-				$id = $user->id;
-				$emails= $this->correo->getAllBySalida($id,$pendiente);
-				$data['emails'] = $emails;
-				$enviado ="Enviado";
-				$emaile = $this->correo->getAllByEnviado($id,$enviado);
-				$data['emaile'] = $emaile;
-				
-				$check_user = $this->user->getSession($id);
+// Show registration page
+public function user_registration_show() {
+$this->load->view('register');
+}
 
-			if (!empty($check_user)){
-					
-					$session_data = array('is_loged' => TRUE,
-						'user_id' => $check_user->id,
-						'username' => $check_user->name,
-						'email' => $check_user->email,
-						);
-					$this->session->set_userdata('logged_in', $session_data);
-					
-					
-			}
-				
-				$this->load->view('Pantillas/Header', $data);
-				$this->load->view('correo_nav');
-         		$this->load->view('vcorreos', $data);
-         		$this->load->view('Pantillas/Footer');
+// Validate and store registration data in database
+public function new_user_registration() {
 
+// Check validation for user input in SignUp form
+$this->form_validation->set_rules('name', 'name', 'trim|required|xss_clean');	
+$this->form_validation->set_rules('username', 'username', 'trim|required|xss_clean');
+$this->form_validation->set_rules('email', 'email', 'trim|required|xss_clean');
+$this->form_validation->set_rules('password', 'password', 'trim|required|xss_clean');
+$this->form_validation->set_rules('estado', 'estado', 'trim|required|xss_clean');
+if ($this->form_validation->run() == FALSE) {
+$this->load->view('register');
+} else {
+$data = array(
+'username' => $this->input->post('username'),
+'name' => $this->input->post('name'),
+'estado' => $this->input->post('estado'),
+'email' => $this->input->post('email'),
+'password' => $this->input->post('password')
+);
+$result = $this->appemail->registration_insert($data);
+if ($result == TRUE) {
+$data['message_display'] = 'Registration Successfully !';
+$this->load->view('login', $data);
+} else {
+$data['message_display'] = 'Username already exist!';
+$this->load->view('register', $data);
+}
+}
+}
 
-				
-         	}else{
-         		$urln = base_url()."user/login";
-			redirect($urln);
-         	}
-		}else{
-				$urln = base_url()."user/login";
-			redirect($urln);
-		 		
-		}
-		
-		
-		}
-	public function verificar(){
-		$code = $_REQUEST['code'];
-		$id = $_REQUEST['id'];
-		$this->load->model('model_user','user');
-		$this->user->verificando($code,$id);
-		$urln = base_url()."user/login";
-		redirect($urln);
-	}
-	
-	public function envioCorreo(){
-		//Método de envío de correo para verificar el registro de un nuevo usuario
+// Check for user login process
+public function user_login_process() {
 
-		include("class.phpmailer.php");
-		include("class.smtp.php"); 
-		$mail = new PHPMailer();
+$this->form_validation->set_rules('username', 'username', 'trim|required|xss_clean');
+$this->form_validation->set_rules('password', 'password', 'trim|required|xss_clean');
 
-//Luego tenemos que iniciar la validación por SMTP:
-		$mail->IsSMTP();
-		$mail->SMTPAuth = true;
-		$mail->SMTPSecure = "ssl"; 
-		$mail->Host = "smtp.gmail.com"; // SMTP a utilizar. Por ej. smtp.elserver.com
-		$mail->Username = "carlossalazar1307@gmail.com"; 
-		$mail->Password = "meco1307"; 
-		$mail->Port = 465; 
+if ($this->form_validation->run() == FALSE) {
+if(isset($this->session->userdata['logged_in'])){
+$this->load->view('main');
+}else{
+$this->load->view('login');
+}
+} else {
+$data = array(
+'username' => $this->input->post('username'),
+'password' => $this->input->post('password')
+);
+$result = $this->appemail->login($data);
+if ($result == TRUE) {
 
-		//$email = $this->input->post('ncorreo');
-		//$email = $_REQUEST['mail'];
-		$email = $this->session->userdata('email');
-		
+$username = $this->input->post('username');
+$result = $this->appemail->read_user_information($username);
+if ($result != false) {
+$session_data = array(
+'username' => $result[0]->username,
+'email' => $result[0]->email,
+);
+// Add user data in session
+$this->session->set_userdata('logged_in', $session_data);
+$this->load->view('main');
+}
+} else {
+$data = array(
+'error_message' => 'Invalid Username or Password'
+);
+$this->load->view('login', $data);
+}
+}
+}
 
-		$mail->From = $email; 
-		$mail->FromName = "Nombre";
-		$mail->Subject = "Notificacion";
-		$mail->AltBody = "Este es un mensaje";  
-		
-		//$code = $_REQUEST['code'];
-		//$id = $_REQUEST['id'];
-		$code = $this->session->userdata('code');
-		$id = $this->session->userdata('user_id');
-		$link = base_url()."user/verificar/?code=$code&id=$id";
-		
-		$mail->MsgHTML("<p>Dale click para verificar tu cuenta</p><a href=$link>Verificar codigo</a>"); 
-		
-		$mail->AddAddress($email); 
-		$mail->IsHTML(true); 
-		
-		
-		$exito = $mail->Send(); // Envía el correo.
+// Logout from admin page
+public function logout() {
 
-		$this->session->unset_userdata('data');
+// Removing session data
+$sess_array = array(
+'username' => ''
+);
+$this->session->unset_userdata('logged_in', $sess_array);
+$data['message_display'] = 'Successfully Logout';
+$this->load->view('login', $data);
+}
 
-		if($exito){
-			
-			$urln = base_url()."user/login";
-			
-			redirect($urln);
-		}else{
-			echo "Hubo un inconveniente. Contacta a un administrador";
-		}
-		$urln = base_url()."user/vcorreos";
-		redirect($urln);	
-	}
-	public  function logout()
-	{
-		$this->session->unset_userdata('data');
-		$this->session->sess_destroy();
-		return redirect('user/login');
+}
 
-	}
-	}
+?>

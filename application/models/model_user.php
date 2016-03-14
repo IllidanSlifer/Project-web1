@@ -20,6 +20,9 @@
 
 
 
+
+
+
 		public function insersion($data){
 			$this->db->insert('users',$data);
 			$id = $this->db->insert_id();

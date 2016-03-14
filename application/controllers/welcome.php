@@ -22,6 +22,7 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->database();
 		$this->load->view('login');
+		//echo "hello";
 	}
 	
 }
