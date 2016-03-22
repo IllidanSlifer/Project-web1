@@ -7,22 +7,6 @@
 			$id=mysql_insert_id();
 			return $id;
 		}
-		public function update($id,$data){
-			$this->db->where('id',$data);
-			$this->db->update('id',$data);
-		}
-		public function delete($id){
-			$this->db->delete('users', array('id' => $id)); 
-
-		}
-
-
-
-
-
-
-
-
 		public function insersion($data){
 			$this->db->insert('users',$data);
 			$id = $this->db->insert_id();
