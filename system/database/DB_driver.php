@@ -333,6 +333,7 @@ class CI_DB_driver {
 
 			return FALSE;
 		}
+		
 
 		// Stop and aggregate the query time results
 		$time_end = list($em, $es) = explode(' ', microtime());

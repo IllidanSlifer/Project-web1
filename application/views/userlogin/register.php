@@ -1,6 +1,6 @@
 
 
-<p><h1><center>Registro Usuario</center></h1></p>
+<p><h1><center>Sign Up</center></h1></p>
 <br>
 <div class="container ">
 
@@ -8,39 +8,39 @@
    <div class="form-group">
     <label  class="col-xs-4 control-label">User Name :</label>
     <div class="col-xs-4">
-      <input type="text" class="form-control" name="nusername" placeholder="Usuario">
+      <input type="text" class="form-control" name="nusername" placeholder="User">
     </div>
   </div>
   <div class="form-group">
     <label  class="col-xs-4 control-label">Password :</label>
     <div class="col-xs-4">
-      <input type="password" class="form-control" name="npassword" placeholder="Contraseña">
+      <input type="password" class="form-control" name="npassword" placeholder="Password">
     </div>
   </div>
   <div class="form-group">
-    <label  class="col-xs-4 control-label">Nombre :</label>
+    <label  class="col-xs-4 control-label">Name :</label>
     <div class="col-xs-4">
-      <input type="text" class="form-control" name="nname" placeholder="Nombre">
+      <input type="text" class="form-control" name="nname" placeholder="Name">
     </div>
   </div>
   <div class="form-group">
     <label  class="col-xs-4 control-label">Email</label>
     <div class="col-xs-4">
-      <input type="email" class="form-control" name="ncorreo" placeholder="Email">
+      <input type="email" class="form-control" name="nemail" placeholder="Email">
     </div>
   </div>
   
 
   <div class="row">
     <div class="col-sm-offset-4 col-xs-4">
-      <button type="submit" class="btn btn-success btn-lg btn-block" name="guardar" >Guardar</button>
+      <button type="submit" class="btn btn-success btn-lg btn-block" name="save" >Save</button>
     </div>
   </div>
 </br>
   <div class="form-group">
     <div class="col-sm-offset-4 col-xs-4" >
       
-      <a class="btn btn-danger btn-lg btn-block" href="<?php echo base_url();?>user/login">Cancelar</a>
+      <a class="btn btn-danger btn-lg btn-block" href="<?php echo base_url();?>user/login">Cancel</a>
       </form>
     </div>
  

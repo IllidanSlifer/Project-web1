@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `emails` (
 `id` int(11) NOT NULL,
-  `destinatario` text NOT NULL,
+  `addressee` text NOT NULL,
   `iduser` int(11) NOT NULL,
-  `mensaje` text NOT NULL,
-  `asunto` text NOT NULL,
+  `message` text NOT NULL,
+  `subject` text NOT NULL,
   `estado` text NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
@@ -39,13 +39,8 @@ CREATE TABLE IF NOT EXISTS `emails` (
 -- Volcado de datos para la tabla `emails`
 --
 
-INSERT INTO `emails` (`id`, `destinatario`, `iduser`, `mensaje`, `asunto`, `estado`) VALUES
-(1, 'bryan103@hotmail.com', 60, 'asdasd    ', 'asdas', 'Enviado'),
-(2, 'bryan103@hotmail.com', 60, 'Sirve??    ', 'Prueba', 'Enviado'),
-(5, 'cesalazars@est.utn.ac.cr', 60, 'hola    ', 'prueba', 'Enviado'),
-(19, 'css_1307@hotmail.com', 56, 'od    ', 'Prueba', 'Enviado'),
-(20, 'cesalazars@est.utn.ac.cr', 61, 'Prueba de puertos&nbsp;    ', 'Prueba', 'Enviado'),
-(21, 'css_1307@hotmail.com', 64, 'Verificar nombre    ', 'Verificar', 'Enviado');
+INSERT INTO `emails` (`id`, `addressee`, `iduser`, `message`, `subject`, `estado`) VALUES
+(, '', , '', '', '');
 
 -- --------------------------------------------------------
 
@@ -68,10 +63,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `user`, `password`, `estado`, `code`, `email`) VALUES
-(56, 'Carlos', 'root', '58d65bdd8944dc8375c30b2ba10ae699', 1, 7061, 'carlossalazar1307@gmail.com'),
-(60, 'carlos', 'prueba', '81dc9bdb52d04dc20036dbd8313ed055', 1, 6908, 'carlos94salazar@gmail.com'),
-(61, 'Carlos', 'carlos', '81dc9bdb52d04dc20036dbd8313ed055', 1, 4735, 'css_1307@hotmail.com'),
-(64, 'pepe', 'pepe', '81dc9bdb52d04dc20036dbd8313ed055', 1, 5942, 'cesalazars@est.utn.ac.cr');
+(, '', '', '', , , '');
 
 --
 -- Índices para tablas volcadas

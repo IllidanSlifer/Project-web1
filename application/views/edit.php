@@ -1,29 +1,29 @@
-  <p><h1><center>Editar Correo</center></h1></p>
+  <p><h1><center>Edit Email</center></h1></p>
       <br/>
 
     <?php foreach ($email as $e) { ?>
 
    
 
-    <form class="form-horizontal" method="POST" action="<?php echo base_url();?>correo/update/?cid=<?php
+    <form class="form-horizontal" method="POST" action="<?php echo base_url();?>email/update/?cid=<?php
     echo $e['id'];?>">
      <div class="form-group">
-      <label  class="col-xs-4 control-label">Destinario :</label>
+      <label  class="col-xs-4 control-label">Addressee :</label>
       <div class="col-xs-4">
-        <input type="email" class="form-control" value='<?php echo $e['destinatario']; ?>' name="nemail" placeholder="Destinario">
+        <input type="email" class="form-control" value='<?php echo $e['addressee']; ?>' name="nemail" placeholder="Addressee">
       </div>
     </div>
     <div class="form-group">
-      <label  class="col-xs-4 control-label">Asunto :</label>
+      <label  class="col-xs-4 control-label">Subject :</label>
       <div class="col-xs-4">
-        <input type="text" class="form-control" value='<?php echo $e['asunto']; ?>' name="nasunto" placeholder="Asunto">
+        <input type="text" class="form-control" value='<?php echo $e['subject']; ?>' name="nsubject" placeholder="Subject">
       </div>
     </div>
     <div class="form-group">
-      <label  class="col-xs-4 control-label">Mensaje :</label>
+      <label  class="col-xs-4 control-label">Message :</label>
       
        <div class="col-xs-4">
-      <textarea name="nmensaje" class="form-control"  style=" width: 365px; height: 200px;"><?php echo $e['mensaje'];?>
+      <textarea name="nmessage" class="form-control"  style=" width: 365px; height: 200px;"><?php echo $e['message'];?>
       </textarea><br />
       </div>
       
@@ -39,7 +39,7 @@
     <div class="form-group">
       <div class="col-sm-offset-4 col-xs-4" >
         
-        <a class="btn btn-danger btn-lg btn-block" href="<?php echo base_url();?>correo/vista/">Cancelar</a>
+        <a class="btn btn-danger btn-lg btn-block" href="<?php echo base_url();?>email/view/">Cancel</a>
         </div>
       </div>
    

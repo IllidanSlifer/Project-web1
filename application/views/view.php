@@ -8,7 +8,7 @@
 	<title>Main</title>
 </head>
 <body>
-	<h1><center>Hello world</center></h1>
+	<h1><center>Hey There</center></h1>
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

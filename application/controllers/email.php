@@ -1,12 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Correo extends CI_Controller {
+class Email extends CI_Controller {
 
 	public function new() 
 	{
 		$data['title'] = 'New Message Page';
 		$this->load->view('templates/Header', $data);
-		$this->load->view('correo_nav');
+		$this->load->view('email_nav');
 		$this->load->view('new');
 		$this->load->view('templates/Footer');
 	}
@@ -15,29 +15,29 @@ class Correo extends CI_Controller {
 	{
 		$this->load->model('model_email','email');
 		$email = $this->input->post('nemail'); 
-		$asunto = $this->input->post('nasunto');
-		$mensaje = $this->input->post('nmensaje');
+		$subject = $this->input->post('nsubject');
+		$message = $this->input->post('nmessage');
 
 		$session =  $this->session->userdata['logged_in'];
 
-			
+		
 		if($session["is_loged"] == true){
 
 			$id = $session['user_id'];
 
 			$data  = array(
-				'destinatario' =>  $email,
+				'addressee' =>  $email,
 				'iduser' => $id , 
-				'mensaje' => $mensaje,
-				'asunto' => $asunto,
-				'estado' => 'Pendiente',
+				'message' => $message,
+				'subject' => $subject,
+				'estado' => 'pending',
 				);
-   		
+			
 			$this->email->insert($data);
 			$urln = base_url()."email/view/";
 			redirect($urln);
 		}
-   			
+		
 		else{
 			$urln = base_url()."user/login";
 			redirect($urln);
@@ -45,27 +45,27 @@ class Correo extends CI_Controller {
 		}
 	}
 
-	public function editar(){
+	public function edit(){
 		$session =  $this->session->userdata['logged_in'];
 
 		if($session["is_loged"] == true){
-		$id = $session['user_id'];
-		$cid = $_REQUEST['cid'];
-		$this->load->model('model_email','email');
-		$correos = $this->email->getEmailId($cid,$id);
-		$data['email'] = $correos;
-		
+			$id = $session['user_id'];
+			$cid = $_REQUEST['cid'];
+			$this->load->model('model_email','email');
+			$emails = $this->email->getEmailId($cid,$id);
+			$data['email'] = $emails;
+			
 			if (!empty($data['email'])) {
 				$data['title'] = 'Edit Message Page';
 				$this->load->view('templates/Header', $data);
-				$this->load->view('correo_nav');
+				$this->load->view('email_nav');
 				$this->load->view('edit',$data);
 				$this->load->view('templates/Footer');
 			}else{
 				$urln = base_url()."email/view";
-			redirect($urln);
+				redirect($urln);
 			}
-		
+			
 		}else{
 
 			$urln = base_url()."user/login";
@@ -75,55 +75,55 @@ class Correo extends CI_Controller {
 
 	public function update(){
 		$email = $this->input->post('nemail'); 
-		$asunto = $this->input->post('nasunto');
-		$mensaje = $this->input->post('nmensaje');
+		$subject = $this->input->post('nsubject');
+		$message = $this->input->post('nmessage');
 		$session =  $this->session->userdata['logged_in'];
 
 
 		if($session["is_loged"] == true){
-		$id = $session['user_id'];	
+			$id = $session['user_id'];	
 
-   			$data  = array(
+			$data  = array(
 				
-				'destinatario' =>  $email, 
-				'mensaje' => $mensaje,
-				'asunto' => $asunto,
+				'addressee' =>  $email, 
+				'message' => $message,
+				'subject' => $subject,
 				);
 
-   		$idc = $_REQUEST['cid'];
-   		
-   		
-   		$this->load->model('model_email','email');
-   		$this->email->update($idc,$data);
-   		
-   		$urln = base_url()."email/view";
-   		redirect($urln);
-   		}
-   		else{
-
-   			$urln = base_url()."user/login";
+			$idc = $_REQUEST['cid'];
+			
+			
+			$this->load->model('model_email','email');
+			$this->email->update($idc,$data);
+			
+			$urln = base_url()."email/view";
 			redirect($urln);
-   		}
+		}
+		else{
+
+			$urln = base_url()."user/login";
+			redirect($urln);
+		}
 	}
 
-	public function eliminar(){
+	public function delete(){
 		$session =  $this->session->userdata['logged_in'];
 
 		if($session["is_loged"] == true){
-		$id = $session['user_id'];
-		$cid = $_REQUEST['cid'];
+			$id = $session['user_id'];
+			$cid = $_REQUEST['cid'];
 
-		$this->load->model('model_email','email');
-		$v = $this->email->delete($cid,$id);
-		if ($v == 1) {
-			$urln = base_url()."email/view/";
-		redirect($urln);
-		}else{
-			$urln = base_url()."email/view/";
-		redirect($urln);
-		}
-		
-		
+			$this->load->model('model_email','email');
+			$v = $this->email->delete($cid,$id);
+			if ($v == 1) {
+				$urln = base_url()."email/view/";
+				redirect($urln);
+			}else{
+				$urln = base_url()."email/view/";
+				redirect($urln);
+			}
+			
+			
 		}else{
 			$urln = base_url()."user/login";
 			redirect($urln);
@@ -131,30 +131,30 @@ class Correo extends CI_Controller {
 	}
 
 	public function view(){
-			$session =  $this->session->userdata['logged_in'];
+		$session =  $this->session->userdata['logged_in'];
 
-			if($session["is_loged"] == true){
+		if($session["is_loged"] == true){
 
-				$this->load->model('model_email','email');
-				$id = $session['user_id'];	
-				$data['title'] = "Main Page";
-				$pendiente = "Pendiente";
-				
-				$emails= $this->email->getAllBySalida($id,$pendiente);
-				$data['emails'] = $emails;
-				$enviado ="Enviado";
-				$emaile = $this->email->getAllByEnviado($id,$enviado);
-				$data['emaile'] = $emaile;
-				
-				
-				$this->load->view('templates/Header', $data);
-				$this->load->view('correo_nav');
-         		$this->load->view('vcorreos', $data);
-         		$this->load->view('templates/Footer');
-         	}else{
-         		$urln = base_url()."user/login";
+			$this->load->model('model_email','email');
+			$id = $session['user_id'];	
+			$data['title'] = "Main Page";
+			$pending = "pending";
+			
+			$emails= $this->email->getAllByOutput($id,$pending);
+			$data['emails'] = $emails;
+			$sent ="sent";
+			$emaile = $this->email->getAllBySent($id,$sent);
+			$data['emaile'] = $emaile;
+			
+			
+			$this->load->view('templates/Header', $data);
+			$this->load->view('email_nav');
+			$this->load->view('vemail', $data);
+			$this->load->view('templates/Footer');
+		}else{
+			$urln = base_url()."user/login";
 			redirect($urln);
-         	}
+		}
 
 	}
 }

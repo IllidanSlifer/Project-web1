@@ -21,7 +21,7 @@ class User extends CI_Controller {
 	public function register(){
 		$data['title'] = 'Register';
 		$this->load->view('templates/Header', $data);
-		$this->load->view('userlogin/registro');
+		$this->load->view('userlogin/register');
 		$this->load->view('templates/Footer');
 
 	}
@@ -31,7 +31,7 @@ class User extends CI_Controller {
 
 
 			$pas = $this->input->post('npassword'); 
-			$email = $this->input->post('ncorreo');
+			$email = $this->input->post('nemail');
 			
 			$encrip = md5($pas);
 			$randcode = rand(1000,9000);
@@ -85,12 +85,12 @@ class User extends CI_Controller {
 				$data['id']=$user->id;
 				$data['title'] = "Main Page";
 				$this->load->model('model_email','email');
-				$pendiente = "Pendiente";
+				$pending = "pending";
 				$id = $user->id;
-				$emails= $this->email->getAllBySalida($id,$pendiente);
+				$emails= $this->email->getAllByOutput($id,$pending);
 				$data['emails'] = $emails;
-				$enviado ="Enviado";
-				$emaile = $this->email->getAllByEnviado($id,$enviado);
+				$sent ="sent";
+				$emaile = $this->email->getAllBySent($id,$sent);
 				$data['emaile'] = $emaile;
 				
 				$check_user = $this->user->getSession($id);
@@ -100,16 +100,14 @@ class User extends CI_Controller {
 					$session_data = array('is_loged' => TRUE,
 						'user_id' => $check_user->id,
 						'username' => $check_user->name,
-						'email' => $check_user->email,
-						);
+						'email' => $check_user->email,);
 					$this->session->set_userdata('logged_in', $session_data);
-					
 					
 			}
 				
 				$this->load->view('templates/Header', $data);
-				$this->load->view('correo_nav');
-         		$this->load->view('vcorreos', $data);
+				$this->load->view('email_nav');
+         		$this->load->view('vemail', $data);
          		$this->load->view('templates/Footer');
 
 
@@ -146,9 +144,9 @@ class User extends CI_Controller {
 		$mail->IsSMTP();
 		$mail->SMTPAuth = true;
 		$mail->SMTPSecure = "ssl"; 
-		$mail->Host = "smtp.hotmail.com"; // SMTP to use, be specific: smtp.elserver.com
-		$mail->Username = "illidankj@hotmail.com"; 
-		$mail->Password = "illidan123"; 
+		$mail->Host = "smtp.gmail.com"; // SMTP to use, be specific: smtp.elserver.com
+		$mail->Username = "kstryper@gmail.com"; 
+		$mail->Password = "stryper123"; 
 		$mail->Port = 465; 
 
 
@@ -181,9 +179,9 @@ class User extends CI_Controller {
 			
 			redirect($urln);
 		}else{
-			echo "There was a drawback . Contact an administrator";
+			echo "There was a drawback. Contact an administrator";
 		}
-		$urln = base_url()."user/vcorreos";
+		$urln = base_url()."user/vemail";
 		redirect($urln);	
 	}
 	public  function logout()

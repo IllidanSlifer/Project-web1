@@ -1,4 +1,4 @@
-<p><h1><center>Pagina Login</center></h1></p>
+<p><h1><center>Login Page</center></h1></p>
 
 <div class="container">
 <form class="form-horizontal">
@@ -21,7 +21,7 @@
   </div>
   <div class="form-group">
     <div class="col-sm-offset-4 col-xs-4">
-      <button type="submit" class="btn btn-success btn-lg btn-block" name="registrar" >Sign up</button>
+      <button type="submit" class="btn btn-success btn-lg btn-block" name="register" >Sign up</button>
     </div>
   </div>
 </form>
