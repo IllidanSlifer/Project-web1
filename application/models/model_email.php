@@ -53,6 +53,21 @@ class Model_email extends CI_Model{
 		}
 
 	}
+	public function getEmails()
+	{
+		$this->db->where("estado","pending");
+		$this->db->select("*");
+		$this->db->from('emails');
+		$query = $this->db->get();
+		return($query->result_array());
+	}
+
+
+	public function update_emailStatus($id){
+		$this->db->where("id", $id);
+		$this->db->set("estado","sent");
+		$this->db->update("emails");
+	}
 
 
 }

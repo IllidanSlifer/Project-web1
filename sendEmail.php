@@ -1,3 +1,4 @@
+
     <?php 
 
     include("class.phpmailer.php");
@@ -32,22 +33,13 @@
       
       $stmt = $conn->query("SELECT * FROM `users`");
       return $stmt->fetchAll(PDO::FETCH_OBJ);
-      
-      
-
   } catch (Exception $e) {
      echo "Connection failed: " . $e->getMessage();
  }
 }
-
-
-
-
 $users = getUsers($servername,$user,$password);
 $emails = getEmail($servername,$user,$password);
 foreach ($emails as $email) {
-  
-
   $idus = $email->iduser;
 
   foreach ($users as $user) {
@@ -59,8 +51,6 @@ foreach ($emails as $email) {
     }
 
 }
-
-
 if (count($emails) > 0) {
  $mail = new PHPMailer();
                 //Then you have to Start Validation SMTP :
@@ -68,28 +58,21 @@ if (count($emails) > 0) {
  $mail->IsSMTP();
  $mail->SMTPAuth = true;
  $mail->SMTPSecure = "ssl"; 
-    			$mail->Host = "smtp.gmail.com"; // SMTP to use. be specific. smtp.elserver.com
-    			$mail->Username = "kstryper@gmail.com"; 
-    			$mail->Password = "stryper123"; 
-    			$mail->Port = 465; 
-    			
-              
-             
-
-    			$mail->From = $email; 
-    			$mail->FromName = $name;
-    			$mail->Subject = $email->subject;
-    			$mail->AltBody = "Hey How are you?";  
-    			$mail->MsgHTML($email->message); 
-              
-    			$mail->AddAddress($email->addressee); 
-    			$mail->IsHTML(true); 
-              
-              
-    			$exito = $mail->Send(); // send email
-    			echo "done";
-
+                $mail->Host = "smtp.gmail.com"; // SMTP to use. be specific. smtp.elserver.com
+                $mail->Username = "kstryper@gmail.com"; 
+                $mail->Password = "stryper123"; 
+                $mail->Port = 465; 
+                $mail->From = $email; 
+                $mail->FromName = $name;
+                $mail->Subject = $email->subject;
+                $mail->AltBody = "Hey How are you?";  
+                $mail->MsgHTML($email->message); 
+          $mail->AddAddress($email->addressee); 
+                $mail->IsHTML(true); 
+                
+                $exito = $mail->Send(); // send email
                 if($exito){
+
                     try {
                        $servername= '127.0.0.1';
                        $user = 'root';
@@ -98,38 +81,20 @@ if (count($emails) > 0) {
             // set the PDO error mode to exception
                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                        echo "Connected successfully" . "\n"; 
-
-
-                       $sql2 = sprintf("UPDATE `emails` SET `estado`='Sent' WHERE `id`=".$email->id);
-
-                //echo $sql2; die(); 
+                       $sql2 = sprintf("UPDATE `emails` SET `estado`='sent' WHERE `id`=".$email->id);
                        $stmt = $conn->prepare($sql2);  
-
                        $stmt->execute();
-
                        echo $stmt->rowCount() . " Record updated successfully" ."\n" ;
-
-
                    }
                    catch(PDOException $e)
                    {
                        echo "Connection failed: " . $e->getMessage();
                    }
-
                }
                else
                {
                  echo "There was a drawback. Contact an administrator";
              }
 
-         }	
-         
-
-
-     }	
-     
-
-
-
-     
-     
+         }  
+     }  

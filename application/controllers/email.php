@@ -2,27 +2,26 @@
 
 class Email extends CI_Controller {
 
-	public function new() 
+	public function create() 
 	{
 		$data['title'] = 'New Message Page';
 		$this->load->view('templates/Header', $data);
-		$this->load->view('email_nav');
-		$this->load->view('new');
+		$this->load->view('navbar/email_nav');
+		$this->load->view('new/new');
 		$this->load->view('templates/Footer');
 	}
-
-	public function insert()
+	
+	/*public function insert()
 	{
+		$session =  $this->session->userdata['logged_in'];
+		
+		$emails = $this->input->post('nemail');
+		$emailmany= explode(',',$emails);
 		$this->load->model('model_email','email');
-		$email = $this->input->post('nemail'); 
 		$subject = $this->input->post('nsubject');
 		$message = $this->input->post('nmessage');
 
-		$session =  $this->session->userdata['logged_in'];
-
-		
-		if($session["is_loged"] == true){
-
+		foreach ($email as $emailmany){
 			$id = $session['user_id'];
 
 			$data  = array(
@@ -33,11 +32,43 @@ class Email extends CI_Controller {
 				'estado' => 'pending',
 				);
 			
-			$this->email->insert($data);
+			$this->email->insert($data);	 
+		}
 			$urln = base_url()."email/view/";
 			redirect($urln);
+			if ($session["is_loged"] == false) {
+			$urln = base_url()."user/login";
+			redirect($urln);
+			
 		}
-		
+	}*/
+	public function insert()
+	{
+		$this->load->model('model_email','email');
+		$email = $this->input->post('nemail'); 
+		$subject = $this->input->post('nsubject');
+		$message = $this->input->post('nmessage');
+
+		$session =  $this->session->userdata['logged_in'];
+
+			
+		if($session["is_loged"] == true){
+
+			$id = $session['user_id'];
+
+			$data  = array(
+				'addressee' =>  $email,
+				'iduser' => $id , 
+				'message' => $message,
+				'subject' => $subject,
+				'estado' => 'Pending',
+				);
+   		
+			$this->email->insert($data);
+			$urln = base_url()."email/view";
+			redirect($urln);
+		}
+   			
 		else{
 			$urln = base_url()."user/login";
 			redirect($urln);
@@ -58,8 +89,8 @@ class Email extends CI_Controller {
 			if (!empty($data['email'])) {
 				$data['title'] = 'Edit Message Page';
 				$this->load->view('templates/Header', $data);
-				$this->load->view('email_nav');
-				$this->load->view('edit',$data);
+				$this->load->view('navbar/email_nav');
+				$this->load->view('edit_mail/edit',$data);
 				$this->load->view('templates/Footer');
 			}else{
 				$urln = base_url()."email/view";
@@ -72,6 +103,35 @@ class Email extends CI_Controller {
 			redirect($urln);
 		}
 	} 
+
+	public function show(){
+		$session =  $this->session->userdata['logged_in'];
+
+		if($session["is_loged"] == true){
+			$id = $session['user_id'];
+			$cid = $_REQUEST['cid'];
+			$this->load->model('model_email','email');
+			$emails = $this->email->getEmailId($cid,$id);
+			$data['email'] = $emails;
+			
+			if (!empty($data['email'])) {
+				$data['title'] = 'Edit Message Page';
+				$this->load->view('templates/Header', $data);
+				$this->load->view('navbar/email_nav');
+				$this->load->view('show_email/showEmail',$data);
+				$this->load->view('templates/Footer');
+			}else{
+				$urln = base_url()."email/view";
+				redirect($urln);
+			}
+			
+		}else{
+
+			$urln = base_url()."user/login";
+			redirect($urln);
+		}
+	} 
+
 
 	public function update(){
 		$email = $this->input->post('nemail'); 
@@ -105,6 +165,7 @@ class Email extends CI_Controller {
 			redirect($urln);
 		}
 	}
+	
 
 	public function delete(){
 		$session =  $this->session->userdata['logged_in'];
@@ -131,6 +192,7 @@ class Email extends CI_Controller {
 	}
 
 	public function view(){
+
 		$session =  $this->session->userdata['logged_in'];
 
 		if($session["is_loged"] == true){
@@ -138,25 +200,20 @@ class Email extends CI_Controller {
 			$this->load->model('model_email','email');
 			$id = $session['user_id'];	
 			$data['title'] = "Main Page";
-			$pending = "pending";
+			$pending = "Pending";
 			
 			$emails= $this->email->getAllByOutput($id,$pending);
 			$data['emails'] = $emails;
 			$sent ="sent";
 			$emaile = $this->email->getAllBySent($id,$sent);
-			$data['emaile'] = $emaile;
-			
-			
+			$data['emaile'] = $emaile;			
 			$this->load->view('templates/Header', $data);
-			$this->load->view('email_nav');
-			$this->load->view('vemail', $data);
+			$this->load->view('navbar/email_nav');
+			$this->load->view('output/vemail', $data);
 			$this->load->view('templates/Footer');
 		}else{
 			$urln = base_url()."user/login";
 			redirect($urln);
 		}
-
 	}
 }
-
-

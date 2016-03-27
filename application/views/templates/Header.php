@@ -9,7 +9,7 @@
 	<title><?php echo $title ?></title>
 
 	<link href="<?php echo base_url()?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
+	<script type="text" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text">
 //<![CDATA[
 bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
   //]]>

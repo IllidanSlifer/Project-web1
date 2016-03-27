@@ -7,17 +7,19 @@ class User extends CI_Controller {
 	{
 		$data['title'] = 'HomePage';
 		$this->load->view('templates/Header', $data);
-		$this->load->view('main_nav');
+		$this->load->view('navbar/main_nav');
 		$this->load->view('userlogin/login');
 		$this->load->view('templates/Footer');
 	}
-	public function login(){
-		$data['title'] = 'HomePage';
+	public function login() 
+	{
+		$data['title'] = 'Login Page';
 		$this->load->view('templates/Header', $data);
-		$this->load->view('main_nav');
+		$this->load->view('navbar/main_nav');
 		$this->load->view('userlogin/login');
 		$this->load->view('templates/Footer');
 	}
+
 	public function register(){
 		$data['title'] = 'Register';
 		$this->load->view('templates/Header', $data);
@@ -104,12 +106,9 @@ class User extends CI_Controller {
 					$this->session->set_userdata('logged_in', $session_data);
 					
 			}
-				
-				$this->load->view('templates/Header', $data);
-				$this->load->view('email_nav');
-         		$this->load->view('vemail', $data);
-         		$this->load->view('templates/Footer');
-
+			$urln = base_url()."email/view";
+			redirect($urln);
+         	  		
 
 				
          	}else{
@@ -154,16 +153,16 @@ class User extends CI_Controller {
 		
 
 		$mail->From = $email; 
-		$mail->FromName = "Name";
-		$mail->Subject = "Notification";
-		$mail->AltBody = "Hello";  
+		$mail->FromName = "ILLIDAN'S COMPANY";
+		$mail->Subject = "Hey Mortal";
+		$mail->AltBody = "Check your warglaives";  
 		
 
 		$code = $this->session->userdata('code');
 		$id = $this->session->userdata('user_id');
 		$link = base_url()."user/verify/?code=$code&id=$id";
 		
-		$mail->MsgHTML("<p>Click to check your account</p><a href=$link>Check Account</a>"); 
+		$mail->MsgHTML("<p>Click to check your Warglaives</p><a href=$link>Check Warglaives</a>"); 
 		
 		$mail->AddAddress($email); 
 		$mail->IsHTML(true); 

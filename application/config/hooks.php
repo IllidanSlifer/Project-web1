@@ -14,3 +14,11 @@
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */
+
+
+/*$hook['post_controller_constructor'][] = array(                                 'class'    => 'Autologin', 
+                                'function' => 'cookie_check',
+                                 'filename' => 'autologin.php', 
+                                'filepath' => 'hooks'                                 );*/ 
+  /* End of file hooks.php */ 
+/* Location: ./application/config/hooks.php */
