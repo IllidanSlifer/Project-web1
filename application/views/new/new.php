@@ -6,7 +6,7 @@
    <div class="form-group">
     <label  class="col-xs-4 control-label">addressee :</label>
     <div class="col-xs-4">
-      <input type="email" class="form-control" name="nemail" placeholder="addressee">
+      <input type="text" class="form-control" name="nemail" placeholder="addressee">
     </div>
   </div>
   <div class="form-group">

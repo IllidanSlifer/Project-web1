@@ -11,22 +11,22 @@ class Email extends CI_Controller {
 		$this->load->view('templates/Footer');
 	}
 	
-	/*public function insert()
+	public function insert()
 	{
 		$session =  $this->session->userdata['logged_in'];
-		
 		$emails = $this->input->post('nemail');
+
 		$emailmany= explode(',',$emails);
+		var_dump($emailmany);
+		
 		$this->load->model('model_email','email');
 		$subject = $this->input->post('nsubject');
 		$message = $this->input->post('nmessage');
-
 		foreach ($email as $emailmany){
 			$id = $session['user_id'];
-
 			$data  = array(
 				'addressee' =>  $email,
-				'iduser' => $id , 
+				'iduser' => $id, 
 				'message' => $message,
 				'subject' => $subject,
 				'estado' => 'pending',
@@ -41,8 +41,8 @@ class Email extends CI_Controller {
 			redirect($urln);
 			
 		}
-	}*/
-	public function insert()
+	}
+	/*public function insert()
 	{
 		$this->load->model('model_email','email');
 		$email = $this->input->post('nemail'); 
@@ -74,7 +74,7 @@ class Email extends CI_Controller {
 			redirect($urln);
 
 		}
-	}
+	}*/
 
 	public function edit(){
 		$session =  $this->session->userdata['logged_in'];

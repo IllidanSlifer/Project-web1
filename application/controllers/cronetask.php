@@ -1,14 +1,10 @@
 <?php
-class sent extends CI_Controller {
-
- public function __construct(){
-   parent::__construct();
-   $this->load->model('model_email');
+class Cronetask extends CI_Controller
+{
+  public function send()
+  {
+   $this->load->model('model_email'); 
    $this->load->library('session');
- }
- function send()
- {
-
    $data = $this->model_email->getEmails();
    
    include("class.phpmailer.php");
@@ -25,7 +21,6 @@ class sent extends CI_Controller {
   'charset' => 'iso-8859-1',
   'wordwrap' => TRUE
   );
-
     $message = '';
     $this->load->library('email', $config);
     $this->email->set_newline("\r\n");
@@ -37,7 +32,7 @@ class sent extends CI_Controller {
       if($this->email->send())
       {
         $this->model_email->update_emailStatus($valor['id']);
-
+        
       }
       else
       {
@@ -48,11 +43,8 @@ class sent extends CI_Controller {
      $urln = base_url()."email/view";
      redirect($urln);
      $this->email->insert($data);
-
-
+       
    }
-
- }
+  }
 
 }
-
