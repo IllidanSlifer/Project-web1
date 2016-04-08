@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-03-2016 a las 19:39:48
+-- Tiempo de generación: 31-03-2016 a las 06:26:44
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.9
 
@@ -34,18 +34,7 @@ CREATE TABLE IF NOT EXISTS `emails` (
   `subject` text NOT NULL,
   `estado` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
-
---
--- Volcado de datos para la tabla `emails`
---
-
-INSERT INTO `emails` (`id`, `addressee`, `iduser`, `message`, `subject`, `estado`) VALUES
-(19, 'kstryper@hotmail.com', 9, '      xd', 'cd', 'sent'),
-(20, 'illidankj@hotmail.com', 10, '      fgh', 'ill', 'sent'),
-(21, 'illidankj@hotmail.com', 10, '      dfgd', 'fghfg', 'sent'),
-(22, 'illidankj@hotmail.com', 10, 'chupela !!!!!!!!', 'holee', 'sent'),
-(23, 'illidankj@hotmail.com', 10, 'in your face motherfucker!!!!      ', 'h', 'sent');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -62,16 +51,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `code` int(11) NOT NULL,
   `email` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
-
---
--- Volcado de datos para la tabla `users`
---
-
-INSERT INTO `users` (`id`, `name`, `user`, `password`, `estado`, `code`, `email`) VALUES
-(9, 'narvaez', 'pollis', '202cb962ac59075b964b07152d234b70', 1, 7477, 'narvaezeliecer@gmail.com'),
-(10, 'kevin', 'illidan', '202cb962ac59075b964b07152d234b70', 1, 8091, 'illidankj@hotmail.com'),
-(11, 'lol', 'yeer', '202cb962ac59075b964b07152d234b70', 1, 6513, 'kstryper@hotmail.com');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

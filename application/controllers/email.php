@@ -11,7 +11,7 @@ class Email extends CI_Controller {
 		$this->load->view('templates/Footer');
 	}
 	
-	public function insert()
+	/*public function insert()
 	{
 		$session =  $this->session->userdata['logged_in'];
 		$emails = $this->input->post('nemail');
@@ -41,8 +41,8 @@ class Email extends CI_Controller {
 			redirect($urln);
 			
 		}
-	}
-	/*public function insert()
+	}*/
+	public function insert()
 	{
 		$this->load->model('model_email','email');
 		$email = $this->input->post('nemail'); 
@@ -74,7 +74,7 @@ class Email extends CI_Controller {
 			redirect($urln);
 
 		}
-	}*/
+	}
 
 	public function edit(){
 		$session =  $this->session->userdata['logged_in'];
